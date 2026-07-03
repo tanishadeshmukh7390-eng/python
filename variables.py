@@ -1,8 +1,13 @@
-# A variable stores a variable
-student_name ="tanisha" 
-marks = 93
-is_passed =True
+print("My name is Shivani\nand my age is 39")
 
-print(student_name)      #outout:tanisha 
-print(marks)             #output:93
-print(is_passed)         #output:true
+
+<!-- {% extends "base.html" %}
+{% block title %} Study Quiz Hub portal {% endblock %}
+
+{% block content %}
+<form>
+        Name:<input type="text">
+        Marks:<input type="number">
+        <buttton type="submit">Add</button>
+</form>
+{% endblock %} -

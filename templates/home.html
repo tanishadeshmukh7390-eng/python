@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %} Home - Study Quiz Hub {% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="hero-section mb-5">
+    <div class="text-center">
+        <h1 class="mb-3">🎓 Welcome to Study Quiz Hub</h1>
+        <p class="text-gradient fs-5 fw-bold mb-2">Master Your Skills. Ace Your Tests. Transform Your Future.</p>
+    </div>
+</div>
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} mt-3">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<!-- Welcome Card -->
+<div class="card-premium mb-5" style="max-width: 900px; margin: 0 auto;">
+    <div class="card-body p-5 text-center">
+        <i class="bi bi-hand-thumbs-up" style="font-size: 3rem; color: var(--electric-blue); margin-bottom: 1.5rem; display: block;"></i>
+        <h2 class="mb-3">Hello Learners! 👋</h2>
+        <p class="text-secondary-light mb-3">
+            Welcome to Study Quiz Hub, a smart and interactive platform where learning meets practice. 
+            Solve quizzes, strengthen your concepts, improve your problem-solving skills, and monitor your progress. 
+            Our goal is to make education simple, engaging, and accessible for every learner.
+        </p>
+        <p class="fs-5 fw-bold text-gradient">
+            🌟 Practice • Learn • Achieve • Succeed 🌟
+        </p>
+    </div>
+</div>
+
+<!-- Category Exploration Cards -->
+<div class="row g-4 mt-2">
+
+    <!-- Technology -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card-premium h-100 text-center">
+            <div class="card-body p-4">
+                <div style="font-size: 3.5rem; margin-bottom: 1.5rem;">🚀</div>
+                <h3 class="mb-3">Technology</h3>
+                <p class="text-secondary-light mb-4">
+                    Web Development, Data Science, Artificial Intelligence, 
+                    Cyber Security, Cloud Computing and modern technologies.
+                </p>
+                <a href="{{ url_for('explore_technology') }}" class="btn btn-primary btn-premium">Explore Now</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Programming Languages -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card-premium h-100 text-center">
+            <div class="card-body p-4">
+                <div style="font-size: 3.5rem; margin-bottom: 1.5rem;">💻</div>
+                <h3 class="mb-3">Programming Languages</h3>
+                <p class="text-secondary-light mb-4">
+                    Python, Java, C, C++, JavaScript, PHP, C#, 
+                    TypeScript and many more programming languages.
+                </p>
+                <a href="{{ url_for('explore_programing_lang') }}" class="btn btn-success btn-premium">Explore Now</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Computer Science -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card-premium h-100 text-center">
+            <div class="card-body p-4">
+                <div style="font-size: 3.5rem; margin-bottom: 1.5rem;">📚</div>
+                <h3 class="mb-3">Computer Science</h3>
+                <p class="text-secondary-light mb-4">
+                    Operating System, DBMS, Computer Networks, 
+                    Data Structures, Algorithms and Software Engineering.
+                </p>
+                <a href="{{ url_for('explore_computer_science') }}" class="btn btn-danger btn-premium">Explore Now</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
