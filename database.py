@@ -1,12 +1,16 @@
+import os
 import sqlite3
 from flask import Flask, render_template, request, flash, redirect, url_for
 
 app = Flask(__name__)
 app.secret_key = 'linkkiwi2026'  # needed for flash messages
 
+#Absoulite path - Always with app1.py folder
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, 'myproject.db')
 
 def get_db():
-    conn = sqlite3.connect('myproject.db')
+    conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -21,7 +25,9 @@ def init_db():
             Username TEXT NOT NULL,
             Email TEXT NOT NULL,
             Password TEXT NOT NULL,
-            subject TEXT NOT NULL   
+            subject TEXT NOT NULL,
+            score INTEGER NOT NULL,
+            time TEXT NOT NULL 
         )
     ''')
 
@@ -49,15 +55,6 @@ def init_db():
 CREATE TABLE IF NOT EXISTS subjects (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL UNIQUE
-)
-""")
-
-    conn.execute("""
-CREATE TABLE IF NOT EXISTS students (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    subject_id INTEGER,
-    FOREIGN KEY(subject_id) REFERENCES subjects(id)
 )
 """)
     

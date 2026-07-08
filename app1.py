@@ -1,14 +1,11 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, session, send_from_directory
+from flask import Flask , render_template ,request ,flash ,redirect ,url_for ,session
 from database import get_db, init_db
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
-import os
+import time
 app = Flask(__name__)
 app.secret_key='linkkiwi2026' #needed for flashing message
 
-@app.route('/IMAGES/<path:filename>')
-def images(filename):
-    return send_from_directory(os.path.join(app.root_path, 'IMAGES'), filename)
 
 QUESTIONS = [
     {
@@ -345,6 +342,7 @@ stud = [
     }
 ]
 
+
 @app.route('/')
 def Home():
         return render_template('Home.html',students=stud)
@@ -447,17 +445,29 @@ def technology():
 @app.route('/web_development/<int:qno>', methods=['GET', 'POST'])
 def web_development(qno):
 
+
+    session["Subject"] = "Web Development"   # Subject nusar change kara
+
+    # New timer for every new quiz
+    session["start_time"] = time.time()
+
     conn = get_db()
 
     rows = conn.execute(
-        "SELECT * FROM QUESTIONS WHERE subject=?",
+        """
+        SELECT *
+        FROM QUESTIONS
+        WHERE subject = ?
+        """,
         ("Web Development",)
     ).fetchall()
 
     conn.close()
 
+    # Dictionary questions
     all_questions = QUESTIONS.copy()
 
+    # Database questions
     for row in rows:
         all_questions.append({
             "q": row["question"],
@@ -479,14 +489,19 @@ def web_development(qno):
     if request.method == "POST":
 
         selected = request.form.get("answer")
+
+        # Save selected answer
         session[f"q{qno}"] = selected
 
+        # Next Question
         if "next" in request.form and qno < len(all_questions) - 1:
             return redirect(url_for("web_development", qno=qno + 1))
 
+        # Previous Question
         if "prev" in request.form and qno > 0:
             return redirect(url_for("web_development", qno=qno - 1))
 
+        # Submit Quiz
         if "submit" in request.form:
 
             score = 0
@@ -503,24 +518,34 @@ def web_development(qno):
         "web_development.html",
         question=all_questions[qno],
         qno=qno,
-        total=len(all_questions)
+        total=len(all_questions),
+        start_time=session["start_time"]
     )
-
 
 @app.route('/Artificial_Intelligence/<int:qno>', methods=['GET', 'POST'])
 def Artificial_Intelligence(qno):
 
+    session["Subject"] = "Artificial Intelligence"   # Subject nusar change kara
+
+    # New timer for every new quiz
+    session["start_time"] = time.time()
     conn = get_db()
 
     rows = conn.execute(
-        "SELECT * FROM QUESTIONS WHERE subject=?",
+        """
+        SELECT *
+        FROM QUESTIONS
+        WHERE subject = ?
+        """,
         ("Artificial Intelligence",)
     ).fetchall()
 
     conn.close()
 
+    # Dictionary questions
     all_questions = QUESTIONS1.copy()
 
+    # Database questions
     for row in rows:
         all_questions.append({
             "q": row["question"],
@@ -542,14 +567,19 @@ def Artificial_Intelligence(qno):
     if request.method == "POST":
 
         selected = request.form.get("answer")
+
+        # Save selected answer
         session[f"q{qno}"] = selected
 
+        # Next Question
         if "next" in request.form and qno < len(all_questions) - 1:
             return redirect(url_for("Artificial_Intelligence", qno=qno + 1))
 
+        # Previous Question
         if "prev" in request.form and qno > 0:
             return redirect(url_for("Artificial_Intelligence", qno=qno - 1))
 
+        # Submit Quiz
         if "submit" in request.form:
 
             score = 0
@@ -566,23 +596,36 @@ def Artificial_Intelligence(qno):
         "Artificial_Intelligence.html",
         question=all_questions[qno],
         qno=qno,
-        total=len(all_questions)
+        total=len(all_questions),
+        start_time=session["start_time"]
     )
 
 @app.route('/data_science/<int:qno>', methods=['GET', 'POST'])
 def data_science(qno):
 
+    # Subject save
+    session["Subject"] = "Data Science"
+
+    # New timer for every new quiz
+    session["start_time"] = time.time()
+
     conn = get_db()
 
     rows = conn.execute(
-        "SELECT * FROM QUESTIONS WHERE subject=?",
+        """
+        SELECT *
+        FROM QUESTIONS
+        WHERE subject = ?
+        """,
         ("Data Science",)
     ).fetchall()
 
     conn.close()
 
+    # Dictionary questions
     all_questions = QUESTIONS2.copy()
 
+    # Database questions
     for row in rows:
         all_questions.append({
             "q": row["question"],
@@ -604,14 +647,19 @@ def data_science(qno):
     if request.method == "POST":
 
         selected = request.form.get("answer")
+
+        # Save selected answer
         session[f"q{qno}"] = selected
 
+        # Next Question
         if "next" in request.form and qno < len(all_questions) - 1:
             return redirect(url_for("data_science", qno=qno + 1))
 
+        # Previous Question
         if "prev" in request.form and qno > 0:
             return redirect(url_for("data_science", qno=qno - 1))
 
+        # Submit Quiz
         if "submit" in request.form:
 
             score = 0
@@ -628,23 +676,34 @@ def data_science(qno):
         "data_science.html",
         question=all_questions[qno],
         qno=qno,
-        total=len(all_questions)
+        total=len(all_questions),
+        start_time=session["start_time"]
     )
 
 @app.route('/cloud_computing/<int:qno>', methods=['GET', 'POST'])
 def cloud_computing(qno):
 
+    session["Subject"] = "Cloud Computing"   # Subject nusar change kara
+
+    # New timer for every new quiz
+    session["start_time"] = time.time()
     conn = get_db()
 
     rows = conn.execute(
-        "SELECT * FROM QUESTIONS WHERE subject=?",
+        """
+        SELECT *
+        FROM QUESTIONS
+        WHERE subject = ?
+        """,
         ("Cloud Computing",)
     ).fetchall()
 
     conn.close()
 
+    # Dictionary questions
     all_questions = QUESTIONS3.copy()
 
+    # Database questions
     for row in rows:
         all_questions.append({
             "q": row["question"],
@@ -666,14 +725,19 @@ def cloud_computing(qno):
     if request.method == "POST":
 
         selected = request.form.get("answer")
+
+        # Save selected answer
         session[f"q{qno}"] = selected
 
+        # Next Question
         if "next" in request.form and qno < len(all_questions) - 1:
             return redirect(url_for("cloud_computing", qno=qno + 1))
 
+        # Previous Question
         if "prev" in request.form and qno > 0:
             return redirect(url_for("cloud_computing", qno=qno - 1))
 
+        # Submit Quiz
         if "submit" in request.form:
 
             score = 0
@@ -690,11 +754,18 @@ def cloud_computing(qno):
         "cloud_computing.html",
         question=all_questions[qno],
         qno=qno,
-        total=len(all_questions)
+        total=len(all_questions),
+        start_time=session["start_time"]
     )
 
 @app.route('/cyber_security/<int:qno>', methods=['GET', 'POST'])
 def cyber_security(qno):
+
+    # Subject save
+    session["Subject"] = "Cyber Security"
+
+    # Timer start only once
+    session["start_time"] = time.time()
 
     conn = get_db()
 
@@ -752,11 +823,18 @@ def cyber_security(qno):
         "cyber_security.html",
         question=all_questions[qno],
         qno=qno,
-        total=len(all_questions)
+        total=len(all_questions),
+        start_time=session.get("start_time")
     )
 
 @app.route('/mobile_app_development/<int:qno>', methods=['GET', 'POST'])
 def Mobile_App_Development(qno):
+
+    # Subject save
+    session["Subject"] = "Mobile App Development"
+
+    # Timer start only once
+    session["start_time"] = time.time() 
 
     conn = get_db()
 
@@ -815,10 +893,11 @@ def Mobile_App_Development(qno):
             return redirect(url_for("Result"))
 
     return render_template(
-        "mobile_app_development.html",
+        "Mobile_App_Development.html",
         question=all_questions[qno],
         qno=qno,
-        total=len(all_questions)
+        total=len(all_questions),
+        start_time=session.get("start_time")
     )
 
 
@@ -840,6 +919,12 @@ def programing_lang():
 
 @app.route('/c_lang/<int:qno>', methods=['GET', 'POST'])
 def c_lang(qno):
+
+    # Subject save
+    session["Subject"] = "C"
+
+    # Timer start only once
+    session["start_time"] = time.time()
 
     conn = get_db()
 
@@ -897,12 +982,19 @@ def c_lang(qno):
         "c_lang.html",
         question=all_questions[qno],
         qno=qno,
-        total=len(all_questions)
+        total=len(all_questions),
+        start_time=session.get("start_time")
     )
 
 
 @app.route('/cpp_lang/<int:qno>', methods=['GET', 'POST'])
 def cpp_lang(qno):
+
+    # Subject save
+    session["Subject"] = "C++"      
+
+    # Timer start only once
+    session["start_time"] = time.time()
 
     conn = get_db()
 
@@ -960,11 +1052,18 @@ def cpp_lang(qno):
         "cpp_lang.html",
         question=all_questions[qno],
         qno=qno,
-        total=len(all_questions)
+        total=len(all_questions),
+        start_time=session.get("start_time")
     )
 
 @app.route('/java_lang/<int:qno>', methods=['GET', 'POST'])
 def java_lang(qno):
+
+    # Subject save
+    session["Subject"] = "Java"
+
+    # Timer start only once
+    session["start_time"] = time.time()
 
     conn = get_db()
 
@@ -1022,11 +1121,18 @@ def java_lang(qno):
         "java_lang.html",
         question=all_questions[qno],
         qno=qno,
-        total=len(all_questions)
+        total=len(all_questions),
+        start_time=session.get("start_time")
     )
 
 @app.route('/python_lang/<int:qno>', methods=['GET', 'POST'])
 def python_lang(qno):
+
+    # Subject save
+    session["Subject"] = "Python"
+
+    # Timer start only once
+    session["start_time"] = time.time()
 
     # Database madhun Python questions ghya
     conn = get_db()
@@ -1094,7 +1200,8 @@ def python_lang(qno):
         "python_lang.html",
         question=all_questions[qno],
         qno=qno,
-        total=len(all_questions)
+        total=len(all_questions),
+        start_time=session.get("start_time")
     )
 
 
@@ -1109,11 +1216,16 @@ def explore_computer_science():
 
 @app.route('/computer_science')
 def computer_science():
-    return render_template('Computer_seience.html')
+    return render_template('computer_science.html')
 
 
 @app.route('/operating_system/<int:qno>', methods=['GET', 'POST'])
 def operating_system(qno):
+    # Subject save  
+    session["Subject"] = "Operating System"
+
+    # Timer start only once
+    session["start_time"] = time.time()
 
     conn = get_db()
 
@@ -1171,12 +1283,19 @@ def operating_system(qno):
         "operating_system.html",
         question=all_questions[qno],
         qno=qno,
-        total=len(all_questions)
+        total=len(all_questions),
+        start_time=session.get("start_time")
     )
 
 
 @app.route('/dbms_lang/<int:qno>', methods=['GET', 'POST'])
 def dbms_lang(qno):
+
+    # Subject save
+    session["Subject"] = "DBMS"
+
+    # Timer start only once
+    session["start_time"] = time.time()
 
     conn = get_db()
 
@@ -1234,11 +1353,17 @@ def dbms_lang(qno):
         "dbms_lang.html",
         question=all_questions[qno],
         qno=qno,
-        total=len(all_questions)
+        total=len(all_questions),   
+        start_time=session.get("start_time")
     )
 
 @app.route('/computer_network/<int:qno>', methods=['GET', 'POST'])
 def computer_network(qno):
+    # Subject save
+    session["Subject"] = "Computer Network"
+
+    # Timer start only once
+    session["start_time"] = time.time()
 
     conn = get_db()
 
@@ -1296,11 +1421,17 @@ def computer_network(qno):
         "computer_network.html",
         question=all_questions[qno],
         qno=qno,
-        total=len(all_questions)
+        total=len(all_questions),
+        start_time=session.get("start_time")
     )
 
 @app.route('/data_structure/<int:qno>', methods=['GET', 'POST'])
 def data_structure(qno):
+    # Subject save
+    session["Subject"] = "Data Structure"
+
+    # Timer start only once
+    session["start_time"] = time.time()
 
     conn = get_db()
 
@@ -1358,7 +1489,8 @@ def data_structure(qno):
         "data_structure.html",
         question=all_questions[qno],
         qno=qno,
-        total=len(all_questions)
+        total=len(all_questions),
+        start_time=session.get("start_time")
     )
 
 
@@ -1372,17 +1504,38 @@ def logout():
 
 @app.route('/subjects')
 def subjects():
-    conn=get_db()
-    rows = conn.execute('''
-                        SELECT subject AS subject_name, COUNT(*) AS student_count
-                        FROM SCORE
-                        GROUP BY subject
-                        ORDER BY subject
-                        ''').fetchall()
+    conn = get_db()
+
+    rows = conn.execute("""
+        SELECT subjects.name AS subject_name,
+               COUNT(SCORE.Sr_no) AS student_count
+        FROM subjects
+        LEFT JOIN SCORE
+            ON subjects.name = SCORE.subject
+        GROUP BY subjects.name
+        ORDER BY subjects.name
+    """).fetchall()
+
     conn.close()
-    return render_template('subjects.html',rows=rows)
+    return render_template("subjects.html", rows=rows)
 
+@app.route("/leaderboard")
+def leaderboard():
 
+    conn = get_db()
+
+    rows = conn.execute("""
+        SELECT Student_name AS Name,
+               subject,
+               Score,
+               Time
+        FROM SCORE
+        ORDER BY Score DESC, Time ASC
+    """).fetchall()
+
+    conn.close()
+
+    return render_template("leaderboard.html", rows=rows)
 
 @app.route('/Register', methods=['GET', 'POST'])
 def Register():
@@ -1410,10 +1563,10 @@ def Register():
         conn.execute(
             '''
             INSERT INTO SCORE
-            (Student_name, total_marks, Username, Email, Password, Subject)
-            VALUES (?, ?, ?, ?, ?, ?)
+            (Student_name, Username, Email, Password, Subject)
+            VALUES (?, ?, ?, ?, ?)
             ''',
-            (student_name, 0, username, email, hashed_password, subject)
+            (student_name, username, email, hashed_password, subject)
         )
 
         conn.commit()
@@ -1508,6 +1661,16 @@ def students():
 
     combined_students = []
 
+    # Dictionary Data
+    for s in stud:
+        combined_students.append({
+        'Sr_no': s.get('Sr_no', s.get('roll_no', '')),
+        'Name': s.get('Name', s.get('name', '')),
+        'username': s.get('username', ''),
+        'email': s.get('email', '')
+        #'password': s.get('password', '')
+    })
+
     # Database Data
     for s in db_students:
         combined_students.append({
@@ -1535,7 +1698,7 @@ def add_student():
         conn.commit()
         conn.close()
         flash(f"Student '{name}' added successfully!")
-        return redirect(url_for('students'))
+        return redirect(url_for('home'))
     return render_template("add_student.html", subjects=subjects)
     
 @app.route('/view_student/<int:Sr_no>')
@@ -1641,15 +1804,117 @@ def Subject():
     return render_template('Subject.html')
 
 
+# @app.route('/Result')
+# def Result():
+#     score = session.get("score", 0)
+#     session.pop("start_time", None)
+#     total = len(QUESTIONS)
+
+#     return render_template("result.html", score=score, total=total)
+
+# from flask import session
+# import time
+
+
+
 @app.route('/Result')
 def Result():
-    score = session.get("score", 0)
-    total = len(QUESTIONS)
 
-    return render_template("result.html", score=score, total=total)
+    score = session.get("score", 0)
+
+    start = session.get("start_time")
+
+    if start:
+        seconds = int(time.time() - start)
+        minutes = seconds // 60
+        seconds = seconds % 60
+        time_taken = f"{minutes}m {seconds}s"
+        session.pop("start_time", None)
+    else:
+        time_taken = "0m 0s"
+
+    # Current Subject
+    subject = session.get("Subject")
+
+    # Select Dictionary Questions
+    if subject == "Artificial Intelligence":
+        dictionary_questions = QUESTIONS1
+
+    elif subject == "Web Development":
+        dictionary_questions = QUESTIONS
+
+    else:
+        dictionary_questions = []
+
+    all_answers = []
+
+    # Dictionary Questions
+    for q in dictionary_questions:
+        all_answers.append({
+            "question": q["q"],
+            "answer": q["answer"]
+        })
+
+    # Database Questions
+    conn = get_db()
+
+    rows = conn.execute("""
+        SELECT question, answer
+        FROM QUESTIONS
+        WHERE subject = ?
+    """, (subject,)).fetchall()
+
+    conn.close()
+
+    for row in rows:
+        all_answers.append({
+            "question": row["question"],
+            "answer": row["answer"]
+        })
+
+    total = len(all_answers)
+
+    return render_template(
+        "result.html",
+        score=score,
+        total=total,
+        time_taken=time_taken,
+        answers=all_answers
+    )
+
+
+    
+
+
+    return render_template(
+        "result.html",
+        score=score,
+        total=total,
+        time_taken=time_taken,
+        answers=all_answers
+    )
+    
+
+
     
 
 init_db()
+
 if __name__ == '__main__':
     
     app.run(debug=True)
+
+
+
+
+
+
+
+
+    #python deployement
+    #pip freeze > requirements.txt
+    #
+    #for deployement
+    #http://www.pythonanywhere.com
+    #command to use in python any where
+    #

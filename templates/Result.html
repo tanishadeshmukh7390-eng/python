@@ -1,7 +1,7 @@
   
   
   
-  {% extends "base.html" %}
+ {% extends "base.html" %}
 
 {% block title %} About - Study Quiz Hub Portal {% endblock %}
 
@@ -20,14 +20,7 @@
             min-height:100vh;
         }
 
-        .result-card{
-            max-width:600px;
-            margin:auto;
-            margin-top:80px;
-            border:none;
-            border-radius:20px;
-            box-shadow:0 0 25px rgba(0,0,0,0.4);
-        }
+
 
         .score-circle{
             width:140px;
@@ -51,12 +44,16 @@
         }
     </style>
 </head>
-
+<script>
+localStorage.removeItem("quizTime");
+</script>
+    
 <body>
 
 <div class="container">
 
-    <div class="card result-card bg-dark text-white text-center p-5">
+    <div class="card result-card bg-dark text-white text-center p-5 " style="max-width:1000px; margin:auto; margin-top:80px; border:none; border-radius:20px;
+            box-shadow:0 0 25px rgba(0,0,0,0.4);">
 
         <h1 class="mb-4">🏆 Quiz Completed!</h1>
 
@@ -70,7 +67,7 @@
 
         <div class="progress mt-4" style="height:25px;">
             <div class="progress-bar bg-success"
-                 style="width:  {{  (score/total)*100}}%">
+                 style="width: {{ (score/total)*100 }}%">
                 {{ ((score/total)*100)|round(0) }}%
             </div>
         </div>
@@ -111,18 +108,122 @@
         <p class="text-light">
             Keep practicing and improve your knowledge.
         </p>
-        <div class="mt-4">
-            <a href="/" class="btn btn-info btn-custom">
-                🔄 Restart Quiz
-            </a>
+
+        {% set percentage = ((score / total) * 100)|round(0) %}
+
+{% if percentage >= 90 %}
+    {% set grade = "A+" %}
+{% elif percentage >= 75 %}
+    {% set grade = "A" %}
+{% elif percentage >= 60 %}
+    {% set grade = "B" %}
+{% elif percentage >= 45 %}
+    {% set grade = "C" %}
+{% elif percentage >= 35 %}
+    {% set grade = "D" %}
+{% else %}
+    {% set grade = "F" %}
+{% endif %}
+
+<div class="row text-center mt-5">
+
+    <div class="col-md-3 mb-3">
+        <div class="card bg-primary text-white shadow border-0">
+            <div class="card-body">
+                <h5>📝 Attempted</h5>
+                <h3>{{ total }}/{{ total }}</h3>
+            </div>
         </div>
-         <div class="text-center mt-4">
-    <a href="{{ url_for('logout') }}" class="btn btn-danger">
-        <i class="bi bi-box-arrow-right"></i> Logout
-    </a>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card bg-success text-white shadow border-0">
+            <div class="card-body">
+                <h5>📊 Percentage</h5>
+                <h3>{{ percentage }}%</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card bg-warning text-dark shadow border-0">
+            <div class="card-body">
+                <h5>🎓 Grade</h5>
+                <h3>{{ grade }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Time Taken -->
+    <div class="col-md-3 mb-3">
+        <div class="card bg-info text-dark">
+            <div class="card-body">
+                <h5>⏰ Time Taken</h5>
+                <h3>{{ time_taken }}</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+        <div class="row mt-4 align-items-center">
+
+    <!-- Left -->
+    <div class="col-4 text-start">
+        <a href="/" class="btn btn-info btn-primary btn-custom">
+            🔄 Restart Quiz
+        </a>
+    </div>
+
+    <div class="col-4 text-center">
+        <a href="{{ url_for('leaderboard') }}" class="btn btn-warning">
+            🏆 Leaderboard
+        </a>
+    </div>
+
+    <!-- Right -->
+    <div class="col-4 text-end">
+        <a href="{{ url_for('logout') }}" class="btn btn-info btn-danger btn-custom">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </a>
+    </div>
+
 </div>
 
+        
+
+</div>
+
+
     </div>
+    <hr class="my-5">
+
+<h2 class="text-warning mb-4">
+    📚 Correct Answers
+</h2>
+
+{% for q in answers %}
+
+<div class="card bg-secondary text-white mb-3 shadow">
+
+    <div class="card-body">
+
+        <h5 class="text-info">
+            Q{{ loop.index }}. {{ q.question }}
+        </h5>
+
+        <p class="mb-0">
+            <strong class="text-success">
+                ✅ Correct Answer:
+            </strong>
+            {{ q.answer }}
+        </p>
+
+    </div>
+
+</div>
+
+
+{% endfor %}
 
 </div>
 
@@ -130,27 +231,4 @@
 </html>
 
 
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Result</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body class="bg-dark text-white">
-
-<div class="container text-center mt-5">
-
-    <h1>🎯 Quiz Result</h1>
-
-    <div class="card bg-secondary p-4 mt-4">
-        <h3>Your Score: {{ score }} / {{ total }}</h3>
-    </div>
-
-    <a href="/" class="btn btn-info mt-3">Restart Quiz</a>
-
-</div>
-
-</body>
-</html> -->
 {% endblock %}

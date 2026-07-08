@@ -1,106 +1,163 @@
 {% extends "base.html" %}
 
-{% block title %} About - Study Quiz Hub {% endblock %}
+{% block title %} About - Study Quiz Hub Portal {% endblock %}
 
 {% block content %}
 
-<!-- Hero Section -->
-<div class="hero-section mb-5">
-    <div class="text-center">
-        <h1 class="mb-3">📖 About Study Quiz Hub</h1>
-        <p class="text-gradient fw-bold fs-5">Building the Future of Learning Through Interactive Quizzes</p>
-    </div>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+}
+
+.container {
+  padding: 0 16px;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="about-section">
+  <h1>About Us Page</h1>
+  <p>Study Quiz Hub Portal is an educational web application developed using Python Flask, HTML, CSS, Bootstrap, and Jinja Templates. The project provides programming quizzes, theory notes, automatic result generation, percentage calculation, and pass/fail status. It helps students improve their programming knowledge and prepare for interviews and examinations through an interactive learning environment..</p>
+
 </div>
 
-<!-- Introduction Card -->
-<div class="card-premium mb-5">
-    <div class="card-body p-4">
-        <p class="lead mb-0">
-            Study Quiz Hub Portal is an innovative educational web application developed using <strong>Python Flask, HTML, CSS, Bootstrap, and Jinja2 Templates</strong>. The platform provides comprehensive programming quizzes, automatic result generation, percentage calculation, and instant feedback. It helps students master programming concepts, improve problem-solving skills, and prepare for interviews and examinations through an interactive learning environment.
+<h2 style="text-align:center">about study quiz hub portal</h2>
+<div class="row">
+    <div class="col-md-4">
+    <div class="card">
+      <h3>Features of Study Quiz Hub Portal</h3>
+        <p>
+        <ul>
+            ✅ Programming MCQ Quizzes<br>
+            ✅ Python, Java, C आणि C++ Subjects<br>
+            ✅ Theory Notes Available<br>
+            ✅ Automatic Result Calculation<br>
+            ✅ Pass/Fail Status<br>
+            ✅ Student Information Display<br>
+            ✅ Easy Navigation Menu<br>
+            ✅ User-Friendly Interface<br>
+            ✅ Knowledge Improvement<br>
+            ✅ Useful for Exam and Interview Preparation<br>
+        </ul>
         </p>
     </div>
-</div>
-
-<!-- Features, About Developer, & Tech Stack -->
-<div class="row g-4">
-
-    <!-- Features Card -->
-    <div class="col-lg-4 col-md-6">
-        <div class="card-premium h-100">
-            <div class="card-body">
-                <h3 class="mb-4">✨ Key Features</h3>
-                <ul class="list-unstyled" style="color: var(--text-secondary);">
-                    <li class="mb-2">✅ Programming MCQ Quizzes</li>
-                    <li class="mb-2">✅ Multiple Subject Categories</li>
-                    <li class="mb-2">✅ Automatic Result Calculation</li>
-                    <li class="mb-2">✅ Pass/Fail Status Detection</li>
-                    <li class="mb-2">✅ Student Performance Tracking</li>
-                    <li class="mb-2">✅ Interactive Dashboard</li>
-                    <li class="mb-2">✅ User-Friendly Interface</li>
-                    <li class="mb-2">✅ Easy Navigation Menu</li>
-                    <li class="mb-2">✅ Interview Prep Resources</li>
-                    <li class="mb-2">✅ Exam Practice Mode</li>
-                </ul>
-            </div>
-        </div>
+  </div>
+    <div class="col-md-4">
+    <div class="card">
+      <div class="text-center">
+    <img src="{{ url_for('static', filename='images/lady.jpg') }}"
+         class="rounded-circle shadow"
+         style="width:100px; height:100px; object-fit:cover;">
+        
+      <div class="container">
+        <h2>Kaveri S Wankhede</h2>
+        <p class="title">Project Creater</p>
+        <p>
+            I am a Computer Engineering student. I created this Study Quiz Hub Portal
+            to help students improve their programming knowledge and practice MCQ quizzes..
+        </p>
+        <p>kaveri@example.com</p>
+        <p><button class="button">Contact</button></p>
+      </div>
     </div>
-
-    <!-- About Developer Card -->
-    <div class="col-lg-4 col-md-6">
-        <div class="card-premium h-100 text-center">
-            <div class="card-body">
-                <img src="{{ url_for('static', filename='images/lady.jpg') }}"
-                     class="rounded-circle shadow mb-4"
-                     style="width: 120px; height: 120px; object-fit: cover; border: 3px solid var(--electric-blue);">
+    </div>
+    </div>
+  
+  <div class="col-md-4">
+    <div class="card">
+      <h3>Technology used for Study Quiz Hub Portal</h3>
+      <p>
+            <ul>
+               <li>Python</li>
+              <li>Flask Framework</li>
+              <li>HTML5</li>
+              <li>CSS3</li>
+              <li>Bootstrap 5</li>
+              <li>Jinja2 Templates</li>
+              <li>SQLite Database</li>
+              <li>JavaScript</li>
+              <li>Visual Studio Code (VS Code)</li>
+              <li>Web Browser (Google Chrome)</li>
+              <li>Git & GitHub (Optional)</li>
                 
-                <h3 class="mb-2">👩‍💻 About the Creator</h3>
-                <p class="text-secondary-light mb-3">
-                    <strong>Tanisha S Kadam</strong>
-                </p>
-                <p class="text-secondary-light mb-3" style="font-size: 0.9rem;">
-                    Computer Engineering Student & Project Innovator
-                </p>
-                <p class="text-secondary-light mb-4" style="font-size: 0.9rem;">
-                    "I created Study Quiz Hub to empower students with engaging tools for self-paced learning and skill enhancement."
-                </p>
-                <a href="mailto:tanu@example.com" class="btn btn-light-premium btn-sm">📧 Contact Creator</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Technology Stack Card -->
-    <div class="col-lg-4 col-md-6">
-        <div class="card-premium h-100">
-            <div class="card-body">
-                <h3 class="mb-4">🛠️ Tech Stack</h3>
-                <ul class="list-unstyled" style="color: var(--text-secondary);">
-                    <li class="mb-2">⚙️ <strong>Python</strong></li>
-                    <li class="mb-2">⚙️ <strong>Flask Framework</strong></li>
-                    <li class="mb-2">⚙️ <strong>HTML5 & CSS3</strong></li>
-                    <li class="mb-2">⚙️ <strong>Bootstrap 5</strong></li>
-                    <li class="mb-2">⚙️ <strong>Jinja2 Templates</strong></li>
-                    <li class="mb-2">⚙️ <strong>SQLite Database</strong></li>
-                    <li class="mb-2">⚙️ <strong>JavaScript (ES6+)</strong></li>
-                    <li class="mb-2">⚙️ <strong>Visual Studio Code</strong></li>
-                    <li class="mb-2">⚙️ <strong>Google Chrome Browser</strong></li>
-                    <li class="mb-2">⚙️ <strong>Git & GitHub</strong></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<!-- Mission Statement -->
-<div class="card-premium mt-5">
-    <div class="card-body p-4 text-center">
-        <h3 class="mb-3">🎯 Our Mission</h3>
-        <p class="text-secondary-light">
-            To make quality programming education accessible to everyone by providing an interactive, engaging platform 
-            that combines theory and practice. We believe in empowering learners to achieve their academic and professional goals 
-            through continuous learning and self-assessment.
+            </ul>
         </p>
+      
+      </div>
     </div>
-</div>
+  </div>
+
+  
+  
+  
+  
+
+</body>
+</html>
 
 {% endblock %}

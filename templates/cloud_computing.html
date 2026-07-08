@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}{% extends "base.html" %}
+
 {% block title %}Cloud_Computing Study Quiz Hub Portal {% endblock %}
 
 {% block content %}
@@ -34,6 +36,11 @@
 </head>
 
 <body>
+<div class="d-flex justify-content-end mt-3">
+    <div id="timer" class="badge bg-danger fs-5 p-3">
+        ⏰ Time Left: 10:00
+    </div>
+</div>
 
 <div class="container">
 
@@ -41,15 +48,17 @@
     ☁️ <br>Cloud_Computing Quiz
 </h2>
 
-    <div class="text-center my-4">
-        <img src="{{ url_for('images', filename='cloud computing_img.jpg') }}" alt="Cloud Computing Quiz" class="img-fluid rounded shadow" style="max-height: 260px;">
-    </div>
-
     <div class="box">
 
-        <h5 style="text-align: center;">Question {{ qno + 1 }} / {{ total }}</h5>
+         <h5 class="text-center">Question {{ qno + 1 }} / {{ total }}</h5>
 
-        <h4 class="mt-3">{{ question.q }}</h4>
+<div class="progress mt-3 mb-3" style="height:20px;">
+    <div class="progress-bar bg-success"
+         role="progressbar"
+         style="width: {{ ((qno + 1) * 100 / total)|round(0) }}%;">
+        {{ qno + 1 }} / {{ total }}
+    </div>
+</div>
 
 <form method="POST">
 
@@ -103,6 +112,41 @@
     </div>
 
 </div>
+<script>
+
+let endTime = {{ start_time }} + 600;   // 10 minutes
+
+function updateTimer() {
+
+    let now = Date.now() / 1000;
+    let timeLeft = Math.floor(endTime - now);
+
+    if (timeLeft <= 0) {
+
+        document.getElementById("timer").innerHTML = "⏰ Time Up!";
+
+        alert("Time Up!");
+
+        document.querySelector("form").submit();
+
+        return;
+    }
+
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+
+    document.getElementById("timer").innerHTML =
+        "⏰ Time Left: " +
+        minutes + ":" +
+        (seconds < 10 ? "0" : "") +
+        seconds;
+}
+
+updateTimer();
+
+setInterval(updateTimer, 1000);
+
+</script>
 
 </body>
 </html>
